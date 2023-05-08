@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\TopicsController;
+use App\Http\Middleware\VerifyUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('login', [UsersController::class, 'login']);
-
 Route::get('/topics', [TopicsController::class, 'getAlls']);
 Route::get('/posts', [PostsController::class, 'getAlls']);
+Route::post('/posts/add', [PostsController::class, 'addPost'])->middleware('verifyuser');
 Route::get('/posts/{id}', [PostsController::class, 'getByID']);

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
 
 class UsersController extends Controller
 {
@@ -15,6 +19,11 @@ class UsersController extends Controller
         }
         else {
             if(password_verify($data['password'], $userExist->password)) {
+                $payload = [
+                    'id' => $userExist->id,
+                ];
+                $token = JWTAuth::fromUser($userExist, $payload);
+                $response['token'] = $token;
                 $response['message'] = 'Success';
             }
             else {
