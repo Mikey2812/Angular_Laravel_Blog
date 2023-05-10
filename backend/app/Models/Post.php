@@ -10,6 +10,15 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'topic_id',
+        'title',
+        'description',
+        'content',
+        'image',
+    ]; 
+
     public function getAlls(){
         $data = DB::table('posts')->get();
         return $data;
